@@ -1,6 +1,7 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const fs = require('fs');
+const { executablePath } = require('@puppeteer/browsers');
 
 // Pastikan folder session ada (untuk Railway dan sejenisnya)
 fs.mkdirSync('./session', { recursive: true });
@@ -9,13 +10,11 @@ const client = new Client({
   authStrategy: new LocalAuth({
     dataPath: './session'  // simpan session ke folder ini
   }),
-  puppeteer: {
-    headless: true,
-    args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-    ]
-  }
+puppeteer: {
+  headless: true,
+  executablePath: executablePath('chrome'),  // pakai Chromium custom
+  args: ['--no-sandbox', '--disable-setuid-sandbox']
+}
 });
 
 client.on('qr', qr => {
