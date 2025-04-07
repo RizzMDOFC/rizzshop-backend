@@ -88,6 +88,6 @@ app.post('/logout', (req, res) => {
   res.json({ success: true });
 });
 
-app.listen(PORT, () => {
-  console.log(`App listening on port: ${port}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 RizzShop has running on rizzshop-backend-production.up.railway.app with port: ${PORT}`);
 });
