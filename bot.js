@@ -23,12 +23,12 @@ client.initialize();
 function sendOtp(phone, otp) {
   const cleaned = phone.replace(/\D/g, '');
   const normalized = cleaned.startsWith('0') ? '62' + cleaned.slice(1) : cleaned;
-  const chatId = `${normalized}@c.us`;
+  const chatId = ${normalized}@c.us;
 
   console.log('➡️ Mengirim OTP ke', chatId);
 
-  client.sendMessage(chatId, `Kode OTP kamu untuk login RizzShop adalah: *${otp}*`)
-    .then(() => console.log(`✅ OTP terkirim ke ${chatId}`))
+  client.sendMessage(chatId, `🔐 OTP untuk login RizzShop:\n\n*${otp}*\n\n > 📌 Kode ini berlaku 5 menit.\n\n_Salin manual kode di atas ke aplikasi._`)
+    .then(() => console.log(✅ OTP terkirim ke ${chatId}))
     .catch(err => console.error('❌ Gagal kirim OTP:', err.message));
 }
 
