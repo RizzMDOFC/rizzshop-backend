@@ -88,6 +88,6 @@ app.post('/logout', (req, res) => {
   res.json({ success: true });
 });
 
-app.listen(port, () => {
+app.listen(PORT, () => {
   console.log(`App listening on port: ${port}`);
 });
