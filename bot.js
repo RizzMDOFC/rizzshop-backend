@@ -1,17 +1,34 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
+const fs = require('fs');
+
+// Pastikan folder session ada (untuk Railway dan sejenisnya)
+fs.mkdirSync('./session', { recursive: true });
 
 const client = new Client({
-  session: sessionData,
+  authStrategy: new LocalAuth({
+    dataPath: './session'  // simpan session ke folder ini
+  }),
   puppeteer: {
     headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+    ]
   }
 });
 
 client.on('qr', qr => {
   console.log('⚠️ Scan QR berikut untuk login WhatsApp:');
   qrcode.generate(qr, { small: true });
+});
+
+client.on('authenticated', () => {
+  console.log('🔐 Autentikasi berhasil! Session tersimpan otomatis.');
+});
+
+client.on('auth_failure', msg => {
+  console.error('❌ Autentikasi gagal:', msg);
 });
 
 client.on('ready', () => {
